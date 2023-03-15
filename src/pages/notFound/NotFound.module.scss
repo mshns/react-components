@@ -1,0 +1,30 @@
+.main {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+  &_title {
+    font-weight: 100;
+    letter-spacing: 0.1rem;
+  }
+
+  &_subtitle {
+    position: relative;
+    font-weight: 100;
+    letter-spacing: 0.1rem;
+    color: rgb(97, 218, 251);
+    &::before {
+      position: absolute;
+      content: 'error';
+      left: calc(50% - 5rem);
+      top: 1rem;
+      font: {
+        family: 'Material Symbols Outlined';
+        size: 10rem;
+        weight: 200;
+      }
+      color: rgb(97, 218, 251);
+    }
+  }
+}
