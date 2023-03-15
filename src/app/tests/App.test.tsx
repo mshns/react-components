@@ -5,19 +5,13 @@ import { BrowserRouter } from 'react-router-dom';
 import App from '../App';
 
 describe('App', () => {
-  it('Renders Title', () => {
-    // ARRANGE
+  it('renders copyright', () => {
     render(
       <BrowserRouter>
         <App />
       </BrowserRouter>
     );
-    // ACT
-    // EXPECT
-    expect(
-      screen.getByRole('heading', {
-        level: 1,
-      })
-    ).toHaveTextContent('React Components');
+    const copyright = screen.getByText('React Components 2023');
+    expect(copyright).toBeInTheDocument();
   });
 });

@@ -8,7 +8,8 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint --ext js,ts,tsx src",
-    "test": "vitest"
+    "test": "vitest --coverage",
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -25,6 +26,8 @@
     "@typescript-eslint/eslint-plugin": "^5.54.1",
     "@typescript-eslint/parser": "^5.54.1",
     "@vitejs/plugin-react": "^3.1.0",
+    "@vitest/coverage-c8": "^0.29.2",
+    "@vitest/coverage-istanbul": "^0.29.2",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.7.0",
     "eslint-plugin-prettier": "^4.2.1",

@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Route, Routes } from 'react-router-dom';
 
 import './Header.scss';
 
@@ -7,7 +7,12 @@ class Header extends React.Component {
   render() {
     return (
       <header className="header">
-        <h1 className="header_title">React Components</h1>
+        <h1 className="header_title">
+          <Routes>
+            <Route path="/" element={'Home Page'} />
+            <Route path="/about" element={'About Us'} />
+          </Routes>
+        </h1>
         <nav className="header_navigation">
           <ul className="navigation-list">
             <li className="navigation-item">
