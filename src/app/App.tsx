@@ -1,8 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import Header from '../widgets/header/Header';
-import Footer from '../widgets/footer/Footer';
+import Layout from './layout/Layout';
 
 import Home from '../pages/home/Home';
 import About from '../pages/about/About';
@@ -14,13 +13,13 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Header />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="/about" element={<About />} />
+          </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
-        <Footer />
       </div>
     );
   }

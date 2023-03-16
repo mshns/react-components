@@ -1,7 +1,9 @@
 .main {
+  min-height: 100vh;
   padding: 2rem;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   text-align: center;
 
   &_title {
@@ -11,9 +13,11 @@
 
   &_subtitle {
     position: relative;
+    min-height: 14rem;
     font-weight: 100;
     letter-spacing: 0.1rem;
     color: rgb(97, 218, 251);
+
     &::before {
       position: absolute;
       content: 'error';
@@ -25,6 +29,31 @@
         weight: 200;
       }
       color: rgb(97, 218, 251);
+    }
+  }
+
+  &_button {
+    width: 240px;
+    padding: 0.5rem 1rem;
+    margin: 0 auto;
+    border: none {
+      radius: 0.5rem;
+    }
+    outline: none;
+    font: {
+      size: 1.5rem;
+      weight: 100;
+    }
+    text: {
+      decoration: none;
+      transform: uppercase;
+    }
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255, 0.75);
+    transition: ease-in-out 0.2s;
+    &:hover {
+      transform: scale(1.05);
+      background-color: rgb(97, 218, 251);
     }
   }
 }
