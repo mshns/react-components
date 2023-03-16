@@ -8,7 +8,7 @@ class Card extends React.Component<ICard> {
     return (
       <div className="card">
         <span className="card_discount">{`Sale -${this.props.discount}%`}</span>
-        <img className="card_image" src={this.props.thumbnail} />
+        <img className="card_image" src={this.props.thumbnail} alt={this.props.title} />
         <h3 className="card_title">{this.props.title}</h3>
         <h4 className="card_price">{`$${this.props.price}`}</h4>
         <div className="card_information">
