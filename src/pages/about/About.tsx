@@ -6,7 +6,7 @@ class About extends React.Component {
   render() {
     return (
       <main className={styles.main}>
-        <h1 className={styles.main_title}>About Us</h1>
+        <h2 className={styles.main_title}>About Us</h2>
         <p className={styles.main_paragraph}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas molestie eu erat ut
           pellentesque. Maecenas imperdiet ligula ullamcorper viverra lacinia. Sed auctor, nisi ut
