@@ -16,10 +16,6 @@ class SearchBar extends React.Component<unknown, ISearchState> {
     this.handleChangeInput = this.handleChangeInput.bind(this);
   }
 
-  componentDidMount() {
-    localStorage.removeItem('searchInputValue');
-  }
-
   componentWillUnmount() {
     localStorage.setItem('searchInputValue', this.state.searchInputValue);
   }

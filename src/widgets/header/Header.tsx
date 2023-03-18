@@ -1,27 +1,40 @@
 import React from 'react';
-import { NavLink, Route, Routes } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import './Header.scss';
 
-class Header extends React.Component {
+import { IHeaderState } from './types/interfaces';
+
+class Header extends React.Component<unknown, IHeaderState> {
+  constructor(props: unknown) {
+    super(props);
+
+    this.state = {
+      pageTitle: window.location.pathname === '/' ? 'Home Page' : 'About Us',
+    };
+  }
+
   render() {
     return (
       <header className="header">
-        <h1 className="header_title">
-          <Routes>
-            <Route path="/" element={'Home Page'} />
-            <Route path="/about" element={'About Us'} />
-          </Routes>
-        </h1>
+        <h1 className="header_title">{this.state.pageTitle}</h1>
         <nav className="header_navigation">
           <ul className="navigation-list">
             <li className="navigation-item">
-              <NavLink to="/" className="navigation-link">
+              <NavLink
+                to="/"
+                className="navigation-link"
+                onClick={() => this.setState({ pageTitle: 'Home Page' })}
+              >
                 Home
               </NavLink>
             </li>
             <li className="navigation-item">
-              <NavLink to="/about" className="navigation-link">
+              <NavLink
+                to="/about"
+                className="navigation-link"
+                onClick={() => this.setState({ pageTitle: 'About Us' })}
+              >
                 About
               </NavLink>
             </li>
