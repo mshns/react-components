@@ -5,8 +5,8 @@ import './Header.scss';
 
 import { IHeaderState } from './types/interfaces';
 
-class Header extends React.Component<unknown, IHeaderState> {
-  constructor(props: unknown) {
+class Header extends React.Component<Record<string, never>, IHeaderState> {
+  constructor(props: Record<string, never>) {
     super(props);
 
     this.state = {
