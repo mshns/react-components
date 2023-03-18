@@ -32,16 +32,16 @@
       size: 1rem;
       weight: 100;
     }
-    background-color: rgb(255, 255, 255, 0.75);
     transition: ease-in-out 0.2s;
-    &:hover,
-    &:focus {
-      background-color: rgb(255, 255, 255, 1);
-    }
   }
 
   &_input {
     width: 50vw;
+    background-color: rgb(255, 255, 255, 0.75);
+    &:hover,
+    &:focus {
+      background-color: rgb(255, 255, 255, 1);
+    }
     &::-webkit-search-cancel-button {
       -webkit-appearance: none;
       width: 1rem;
@@ -74,9 +74,11 @@
     margin-left: 0.5rem;
     color: rgb(50, 50, 50);
     text-transform: uppercase;
+    background-color: rgb(255, 255, 255, 0.75);
     cursor: pointer;
     &:hover {
-      color: rgb(97, 218, 251);
+      color: rgb(0, 0, 0);
+      background-color: rgb(97, 218, 251);
     }
   }
 }

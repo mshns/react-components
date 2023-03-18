@@ -6,11 +6,7 @@ import NotFound from '../NotFound';
 
 describe('NotFound', () => {
   it('renders title', () => {
-    render(
-      <BrowserRouter>
-        <NotFound />
-      </BrowserRouter>
-    );
+    render(<NotFound />, { wrapper: BrowserRouter });
     expect(
       screen.getByRole('heading', {
         level: 1,
