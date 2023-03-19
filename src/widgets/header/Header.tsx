@@ -9,9 +9,16 @@ class Header extends React.Component<Record<string, never>, IHeaderState> {
   constructor(props: Record<string, never>) {
     super(props);
 
+    const title: string = window.location.pathname === '/' ? 'Home Page' : 'About Us';
     this.state = {
-      pageTitle: window.location.pathname === '/' ? 'Home Page' : 'About Us',
+      pageTitle: title,
     };
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(title: string) {
+    this.setState({ pageTitle: title });
   }
 
   render() {
@@ -24,7 +31,7 @@ class Header extends React.Component<Record<string, never>, IHeaderState> {
               <NavLink
                 to="/"
                 className="navigation-link"
-                onClick={() => this.setState({ pageTitle: 'Home Page' })}
+                onClick={() => this.handleClick('Home Page')}
               >
                 Home
               </NavLink>
@@ -33,7 +40,7 @@ class Header extends React.Component<Record<string, never>, IHeaderState> {
               <NavLink
                 to="/about"
                 className="navigation-link"
-                onClick={() => this.setState({ pageTitle: 'About Us' })}
+                onClick={() => this.handleClick('About Us')}
               >
                 About
               </NavLink>

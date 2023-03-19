@@ -24,7 +24,7 @@ describe('App', () => {
     ).toHaveTextContent('About Us');
   });
 
-  it('renders home page', () => {
+  it('renders pages', () => {
     render(
       <MemoryRouter initialEntries={['/', '/about']}>
         <App />
@@ -44,7 +44,7 @@ describe('App', () => {
     expect(error).toBeInTheDocument();
   });
 
-  it('renders', () => {
+  it('renders footer', () => {
     render(<App />, { wrapper: BrowserRouter });
     const copyright = screen.getByText('React Components 2023');
     expect(copyright).toBeInTheDocument();
