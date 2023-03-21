@@ -9,7 +9,18 @@ class Header extends React.Component<Record<string, never>, IHeaderState> {
   constructor(props: Record<string, never>) {
     super(props);
 
-    const title: string = window.location.pathname === '/' ? 'Home Page' : 'About Us';
+    let title = '';
+    switch (window.location.pathname) {
+      case '/':
+        title = 'Home Page';
+        break;
+      case '/about':
+        title = 'About Us';
+        break;
+      case '/form':
+        title = 'Form Page';
+        break;
+    }
     this.state = {
       pageTitle: title,
     };
@@ -43,6 +54,15 @@ class Header extends React.Component<Record<string, never>, IHeaderState> {
                 onClick={() => this.handleClick('About Us')}
               >
                 About
+              </NavLink>
+            </li>
+            <li className="navigation-item">
+              <NavLink
+                to="/form"
+                className="navigation-link"
+                onClick={() => this.handleClick('Form Page')}
+              >
+                Form
               </NavLink>
             </li>
           </ul>
