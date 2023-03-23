@@ -1,5 +1,38 @@
 .form {
   display: flex;
-  flex-direction: column;
-  text-align: center;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  &_title {
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    color: rgb(97, 218, 251);
+  }
+
+  &_field {
+    min-width: calc(50% - 1rem);
+  }
+
+  &_button {
+    padding: 0.2rem 0.4rem;
+    margin: 1rem auto .25rem;
+    border: none {
+      radius: 0.1rem;
+    }
+    outline: none;
+    font: {
+      family: 'Russo One', sans-serif;
+      size: 1rem;
+      weight: 100;
+    }
+    transition: ease-in-out 0.2s;
+    color: rgb(50, 50, 50);
+    text-transform: uppercase;
+    background-color: rgb(255, 255, 255, 0.75);
+    cursor: pointer;
+    &:hover {
+      color: rgb(0, 0, 0);
+      background-color: rgb(97, 218, 251);
+    }
+  }
 }

@@ -1,10 +1,11 @@
 import React from 'react';
-import { IFormPageState } from '../../pages/formPage/FormPage';
 
 import styles from './Form.module.scss';
 
-class Form extends React.Component<IFormPageState> {
-  constructor(props: IFormPageState) {
+import { IForm } from './types/interfaces';
+
+class Form extends React.Component<IForm> {
+  constructor(props: IForm) {
     super(props);
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -30,41 +31,34 @@ class Form extends React.Component<IFormPageState> {
     // console.log(this.secondDiscountedRef.current?.checked);
     // console.log(this.thumbnailRef?.current?.files);
 
-    this.setState({
-      cards: [
-        ...this.props.cards,
-        {
-          id: 2,
-          title: 'iPhone 14 Pro',
-          date: '2023-03-24',
-          discount: false,
-          brand: 'Apple',
-          category: 'Smartphones',
-          thumbnail:
-            'https://raw.githubusercontent.com/mshns/online-store/develop/src/assets/data/1/thumbnail.jpg',
-        },
-      ],
+    this.props.addProduct({
+      id: 2,
+      title: 'iPhone 14 Pro',
+      date: '2023-03-24',
+      discount: false,
+      brand: 'Apple',
+      category: 'Smartphones',
+      thumbnail:
+        'https://raw.githubusercontent.com/mshns/online-store/develop/src/assets/data/1/thumbnail.jpg',
     });
-
-    console.log(this.props.cards);
   }
 
   render() {
     return (
-      <form className={styles.form} onSubmit={this.handleSubmit}>
-        <fieldset>
-          <legend>Product card</legend>
-          <fieldset>
+      <form onSubmit={this.handleSubmit}>
+        <fieldset className={styles.form}>
+          <legend className={styles.form_title}>Product card</legend>
+          <fieldset className={styles.form_field}>
             <legend>Product title</legend>
             <input ref={this.titleRef} type="text" />
           </fieldset>
 
-          <fieldset>
+          <fieldset className={styles.form_field}>
             <legend>Date of creation</legend>
             <input ref={this.dateRef} type="date" />
           </fieldset>
 
-          <fieldset>
+          <fieldset className={styles.form_field}>
             <legend>Brand</legend>
             <select ref={this.brandRef}>
               <option value="Xiaomi">Xiaomi</option>
@@ -72,7 +66,7 @@ class Form extends React.Component<IFormPageState> {
             </select>
           </fieldset>
 
-          <fieldset>
+          <fieldset className={styles.form_field}>
             <legend>Category</legend>
             <input ref={this.firstCategoryRef} type="checkbox" id="smartphones" />
             <label htmlFor="smartphones">Smartphones</label>
@@ -81,7 +75,7 @@ class Form extends React.Component<IFormPageState> {
             <label htmlFor="laptops">Laptops</label>
           </fieldset>
 
-          <fieldset>
+          <fieldset className={styles.form_field}>
             <legend>Discounted</legend>
             <input ref={this.firstDiscountedRef} type="radio" id="yes" name="discounted" />
             <label htmlFor="yes">Yes</label>
@@ -90,12 +84,14 @@ class Form extends React.Component<IFormPageState> {
             <label htmlFor="no">No</label>
           </fieldset>
 
-          <fieldset>
+          <fieldset className={styles.form_field}>
             <legend>Image</legend>
             <input ref={this.thumbnailRef} type="file" accept="image/png, image/jpeg" />
           </fieldset>
 
-          <button type="submit">Create a card</button>
+          <button className={styles.form_button} type="submit">
+            Create a card
+          </button>
         </fieldset>
       </form>
     );

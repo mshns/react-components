@@ -10,3 +10,7 @@ export interface ICard {
 export interface IProduct extends ICard {
   id: number;
 }
+
+export interface IProductList {
+  productList: IProduct[];
+}
