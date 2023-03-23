@@ -53,12 +53,26 @@
     }
   }
 
-  &_price {
+  &_date {
+    position: relative;
     margin: 0 auto 0.5rem;
+    padding-left: 1.5rem;
     color: rgb(97, 218, 251);
     font: {
-      size: 1.5rem;
+      size: 1rem;
       weight: 100;
+    }
+    &::before {
+      position: absolute;
+      left: 0;
+      top: -0.4rem;
+      content: 'calendar_month';
+      font: {
+        family: 'Material Symbols Outlined';
+        size: 1.5rem;
+        weight: 200;
+      }
+      color: rgb(255, 255, 255);
     }
   }
 
@@ -91,21 +105,6 @@
       }
       color: rgb(97, 218, 251);
     }
-  }
-
-  &_description {
-    width: 230px;
-    margin: 0.5rem auto;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font: {
-      size: 0.8rem;
-      weight: 100;
-    }
-    letter-spacing: 0.5px;
   }
 
   &_button {
