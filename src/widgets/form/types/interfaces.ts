@@ -12,4 +12,5 @@ export interface IFormState {
   alertThumbnail: boolean;
   alertAgree: boolean;
   id: number;
+  message: boolean;
 }

@@ -16,6 +16,7 @@ class Form extends React.Component<IFormProps, IFormState> {
       alertThumbnail: false,
       alertAgree: false,
       id: 1,
+      message: false,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -76,6 +77,7 @@ class Form extends React.Component<IFormProps, IFormState> {
           : '',
       });
 
+      this.setState({ message: true });
       this.formRef.current?.reset();
       this.setState((prev) => ({ id: prev.id + 1 }));
     }
@@ -83,7 +85,11 @@ class Form extends React.Component<IFormProps, IFormState> {
 
   render() {
     return (
-      <form ref={this.formRef} onSubmit={this.handleSubmit}>
+      <form
+        ref={this.formRef}
+        onSubmit={this.handleSubmit}
+        onChange={() => this.setState({ message: false })}
+      >
         <fieldset className={styles.form}>
           <legend className={styles.form_title}>Product card</legend>
           <fieldset className={styles.form_field}>
@@ -153,6 +159,14 @@ class Form extends React.Component<IFormProps, IFormState> {
               </p>
             )}
           </fieldset>
+
+          {this.state.message && (
+            <p className={styles.form_message}>
+              Product card has been successfully created.
+              <br />
+              You can create another card.
+            </p>
+          )}
 
           <button className={styles.form_button} type="submit">
             Create a card

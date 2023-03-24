@@ -31,6 +31,13 @@
     color: rgb(255, 0, 0);
   }
 
+  &_message {
+    width: 100%;
+    margin-bottom: 0;
+    text-align: center;
+    color: rgb(97, 218, 251);
+  }
+
   &_field {
     width: calc(50% - 2rem);
     padding: 1rem 2rem;
