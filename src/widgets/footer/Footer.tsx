@@ -12,7 +12,7 @@ class Footer extends React.Component {
         <Link to="https://github.com/mshns/" className="footer_author">
           mshns
         </Link>
-        <h3 className="footer_copyright">React Components 2023</h3>
+        <h3 className="footer_copyright">React 2023</h3>
         <Link to="https://rs.school/react/">
           <RSSlogo className="footer_school" />
         </Link>
