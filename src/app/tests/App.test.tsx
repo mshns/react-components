@@ -30,7 +30,7 @@ describe('App', () => {
         <App />
       </MemoryRouter>
     );
-    const copyright = screen.getByText('React Components 2023');
+    const copyright = screen.getByText('React 2023');
     expect(copyright).toBeInTheDocument();
   });
 
@@ -46,7 +46,7 @@ describe('App', () => {
 
   it('renders footer', () => {
     render(<App />, { wrapper: BrowserRouter });
-    const copyright = screen.getByText('React Components 2023');
+    const copyright = screen.getByText('React 2023');
     expect(copyright).toBeInTheDocument();
   });
 });
