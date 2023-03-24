@@ -2,76 +2,156 @@ import React from 'react';
 
 import styles from './Form.module.scss';
 
-import { IForm } from './types/interfaces';
+import { IFormProps, IFormState } from './types/interfaces';
 
-class Form extends React.Component<IForm> {
-  constructor(props: IForm) {
+class Form extends React.Component<IFormProps, IFormState> {
+  constructor(props: IFormProps) {
     super(props);
+
+    this.state = {
+      alertTitle: false,
+      alertDate: false,
+      alertBrand: false,
+      alertDiscount: false,
+      alertThumbnail: false,
+      alertAgree: false,
+      id: 1,
+    };
+
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  formRef = React.createRef<HTMLFormElement>();
   titleRef = React.createRef<HTMLInputElement>();
   dateRef = React.createRef<HTMLInputElement>();
   brandRef = React.createRef<HTMLSelectElement>();
-  discountRef = React.createRef<HTMLInputElement>();
+  withDiscountRef = React.createRef<HTMLInputElement>();
+  withoutDiscountRef = React.createRef<HTMLInputElement>();
   thumbnailRef = React.createRef<HTMLInputElement>();
   agreeRef = React.createRef<HTMLInputElement>();
 
   handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    this.props.addProduct({
-      id: 2,
-      title: this.titleRef.current?.value ?? '',
-      date: this.dateRef.current?.value ?? '',
-      discount: this.discountRef.current?.checked ?? false,
-      brand: this.brandRef.current?.value ?? '',
-      thumbnail: this.thumbnailRef?.current?.files
-        ? URL.createObjectURL(this.thumbnailRef.current.files[0])
-        : '',
-    });
+    this.titleRef.current?.value && this.titleRef.current?.value.length > 4
+      ? this.setState({ alertTitle: false })
+      : this.setState({ alertTitle: true });
+
+    this.dateRef.current?.value && this.dateRef.current?.value < '2023-03-27'
+      ? this.setState({ alertDate: false })
+      : this.setState({ alertDate: true });
+
+    this.brandRef.current?.value != 'choose'
+      ? this.setState({ alertBrand: false })
+      : this.setState({ alertBrand: true });
+
+    this.withDiscountRef.current?.checked || this.withoutDiscountRef.current?.checked
+      ? this.setState({ alertDiscount: false })
+      : this.setState({ alertDiscount: true });
+
+    this.thumbnailRef?.current?.files?.length
+      ? this.setState({ alertThumbnail: false })
+      : this.setState({ alertThumbnail: true });
+
+    this.agreeRef.current?.checked
+      ? this.setState({ alertAgree: false })
+      : this.setState({ alertAgree: true });
+
+    if (
+      this.titleRef.current?.value &&
+      this.dateRef.current?.value &&
+      this.brandRef.current?.value != 'choose' &&
+      (this.withDiscountRef.current?.checked || this.withoutDiscountRef.current?.checked) &&
+      this.thumbnailRef?.current?.files?.length &&
+      this.agreeRef.current?.checked
+    ) {
+      this.props.addProduct({
+        id: this.state.id,
+        title: this.titleRef.current?.value ?? '',
+        date: this.dateRef.current?.value ?? '',
+        discount: this.withDiscountRef.current?.checked ?? false,
+        brand: this.brandRef.current?.value ?? '',
+        thumbnail: this.thumbnailRef?.current?.files
+          ? URL.createObjectURL(this.thumbnailRef.current.files[0])
+          : '',
+      });
+
+      this.formRef.current?.reset();
+      this.setState((prev) => ({ id: prev.id + 1 }));
+    }
   }
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form ref={this.formRef} onSubmit={this.handleSubmit}>
         <fieldset className={styles.form}>
           <legend className={styles.form_title}>Product card</legend>
           <fieldset className={styles.form_field}>
-            <legend>Enter product name</legend>
-            <input ref={this.titleRef} type="text" required />
+            <legend className={styles.form_subtitle}>Product name</legend>
+            <input
+              ref={this.titleRef}
+              type="text"
+              className={styles.form_input}
+              placeholder="Enter product name"
+            />
+            {this.state.alertTitle && (
+              <p className={styles.form_alert}>Please enter a name longer than 5 letters</p>
+            )}
           </fieldset>
 
           <fieldset className={styles.form_field}>
-            <legend>Enter release date</legend>
-            <input ref={this.dateRef} type="date" required />
+            <legend className={styles.form_subtitle}>Release date</legend>
+            <input ref={this.dateRef} type="date" className={styles.form_input} />
+            {this.state.alertDate && (
+              <p className={styles.form_alert}>Please enter a date no earlier than today</p>
+            )}
           </fieldset>
 
           <fieldset className={styles.form_field}>
-            <legend>Choose a product brand</legend>
-            <select ref={this.brandRef}>
+            <legend className={styles.form_subtitle}>Product brand</legend>
+            <select ref={this.brandRef} className={styles.form_input}>
+              <option value="choose" hidden>
+                Choose a brand
+              </option>
               <option value="Xiaomi">Xiaomi</option>
               <option value="Apple">Apple</option>
             </select>
+            {this.state.alertBrand && <p className={styles.form_alert}>Please choose a brand</p>}
           </fieldset>
 
           <fieldset className={styles.form_field}>
-            <legend>Discounted</legend>
-            <input ref={this.discountRef} type="radio" id="withDiscount" name="discount" required />
+            <legend className={styles.form_subtitle}>Discounted</legend>
+            <input ref={this.withDiscountRef} type="radio" id="withDiscount" name="discount" />
             <label htmlFor="withDiscount">On sale</label>
-            <input type="radio" id="withoutDiscount" name="discount" />
+            <input
+              ref={this.withoutDiscountRef}
+              type="radio"
+              id="withoutDiscount"
+              name="discount"
+            />
             <label htmlFor="withoutDiscount">Without discount</label>
+            {this.state.alertDiscount && (
+              <p className={styles.form_alert}>Please select one of the options</p>
+            )}
           </fieldset>
 
           <fieldset className={styles.form_field}>
-            <legend>Image</legend>
-            <input ref={this.thumbnailRef} type="file" accept="image/png, image/jpeg" required />
+            <legend className={styles.form_subtitle}>Product image</legend>
+            <input ref={this.thumbnailRef} type="file" accept="image/png, image/jpeg" />
+            {this.state.alertThumbnail && (
+              <p className={styles.form_alert}>Please upload an image</p>
+            )}
           </fieldset>
 
           <fieldset className={styles.form_field}>
-            <legend>Agreement</legend>
-            <input ref={this.agreeRef} type="checkbox" id="agree" required />
+            <legend className={styles.form_subtitle}>Agreement</legend>
+            <input ref={this.agreeRef} type="checkbox" id="agree" />
             <label htmlFor="agree">I consent to the processing of data</label>
+            {this.state.alertAgree && (
+              <p className={styles.form_alert}>
+                Please give your consent to the processing of data
+              </p>
+            )}
           </fieldset>
 
           <button className={styles.form_button} type="submit">
