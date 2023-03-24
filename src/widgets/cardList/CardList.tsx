@@ -15,7 +15,6 @@ class CardList extends React.Component {
             date={item.date}
             discount={item.discount}
             brand={item.brand}
-            category={item.category}
             thumbnail={item.thumbnail}
             key={item.id}
           />
