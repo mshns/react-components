@@ -3,7 +3,6 @@ export interface ICard {
   date: string;
   discount: boolean;
   brand: string;
-  category: string;
   thumbnail: string;
 }
 

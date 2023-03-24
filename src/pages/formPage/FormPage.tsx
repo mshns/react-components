@@ -33,7 +33,6 @@ class FormPage extends React.Component<Record<string, never>, IProductList> {
               date={item.date}
               discount={item.discount}
               brand={item.brand}
-              category={item.category}
               thumbnail={item.thumbnail}
               key={item.id}
             />

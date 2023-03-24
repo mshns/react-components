@@ -12,7 +12,7 @@ class Card extends React.Component<ICard> {
         <h3 className="card_title">{this.props.title}</h3>
         <h4 className="card_date">{this.props.date}</h4>
         <div className="card_information">
-          <span className="card_category">{this.props.category}</span>
+          <span className="card_category">Smartphones</span>
           <span className="card_brand">{this.props.brand}</span>
         </div>
         <div className="card_information">
