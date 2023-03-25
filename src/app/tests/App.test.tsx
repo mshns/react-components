@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { act, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import App from '../App';
@@ -11,12 +11,8 @@ describe('App', () => {
         <App />
       </MemoryRouter>
     );
-
-    act(() => {
-      const aboutLink = screen.getByText('About');
-      aboutLink.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-    });
-
+    const aboutLink = screen.getByText('About');
+    fireEvent.click(aboutLink);
     expect(
       screen.getByRole('heading', {
         level: 2,
@@ -26,7 +22,7 @@ describe('App', () => {
 
   it('renders pages', () => {
     render(
-      <MemoryRouter initialEntries={['/', '/about']}>
+      <MemoryRouter initialEntries={['/about']}>
         <App />
       </MemoryRouter>
     );
