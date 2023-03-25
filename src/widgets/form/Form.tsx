@@ -39,44 +39,38 @@ class Form extends React.Component<IFormProps, IFormState> {
   handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    this.titleRef.current?.value && this.titleRef.current?.value.length > 4
-      ? this.setState({ alertTitle: false })
-      : this.setState({ alertTitle: true });
+    const titleValidation = this.titleRef.current?.value && this.titleRef.current?.value.length > 4;
+    this.setState({ alertTitle: titleValidation ? false : true });
 
-    this.dateRef.current?.value && this.dateRef.current?.value < '2023-03-27'
-      ? this.setState({ alertDate: false })
-      : this.setState({ alertDate: true });
+    const dateValidation =
+      this.dateRef.current?.value && this.dateRef.current?.value < '2024-01-01';
+    this.setState({ alertDate: dateValidation ? false : true });
 
-    this.brandRef.current?.value != 'choose'
-      ? this.setState({ alertBrand: false })
-      : this.setState({ alertBrand: true });
+    const brandValidation = this.brandRef.current?.value != 'choose';
+    this.setState({ alertBrand: brandValidation ? false : true });
 
-    this.withDiscountRef.current?.checked || this.withoutDiscountRef.current?.checked
-      ? this.setState({ alertDiscount: false })
-      : this.setState({ alertDiscount: true });
+    const discountValidation =
+      this.withDiscountRef.current?.checked || this.withoutDiscountRef.current?.checked;
+    this.setState({ alertDiscount: discountValidation ? false : true });
 
-    this.thumbnailRef?.current?.files?.length
-      ? this.setState({ alertThumbnail: false })
-      : this.setState({ alertThumbnail: true });
+    const thumbnailValidation = this.thumbnailRef?.current?.files?.length;
+    this.setState({ alertThumbnail: thumbnailValidation ? false : true });
 
-    this.agreeRef.current?.checked
-      ? this.setState({ alertAgree: false })
-      : this.setState({ alertAgree: true });
+    const agreeValidation = this.agreeRef.current?.checked;
+    this.setState({ alertAgree: agreeValidation ? false : true });
 
     if (
-      this.titleRef.current?.value &&
-      this.titleRef.current?.value.length > 4 &&
-      this.dateRef.current?.value &&
-      this.dateRef.current?.value < '2023-03-27' &&
-      this.brandRef.current?.value != 'choose' &&
-      (this.withDiscountRef.current?.checked || this.withoutDiscountRef.current?.checked) &&
-      this.thumbnailRef?.current?.files?.length &&
-      this.agreeRef.current?.checked
+      titleValidation &&
+      dateValidation &&
+      brandValidation &&
+      discountValidation &&
+      thumbnailValidation &&
+      agreeValidation
     ) {
       this.props.addProduct({
         id: this.state.id,
-        title: this.titleRef.current?.value,
-        date: this.dateRef.current?.value,
+        title: this.titleRef.current?.value ?? '',
+        date: this.dateRef.current?.value ?? '',
         discount: this.withDiscountRef.current?.checked ?? false,
         brand: this.brandRef.current?.value ?? '',
         thumbnail: this.thumbnailRef?.current?.files
