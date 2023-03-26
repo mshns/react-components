@@ -1,8 +1,13 @@
 import React from 'react';
 
+import BrandList from './components/BrandList';
+
 import styles from './Form.module.scss';
 
 import { IFormProps, IFormState } from './types/interfaces';
+
+import { ValidationAlert, SubmitAlert } from './constants/messages';
+import todayDate from './helpers/today';
 
 class Form extends React.Component<IFormProps, IFormState> {
   constructor(props: IFormProps) {
@@ -20,6 +25,7 @@ class Form extends React.Component<IFormProps, IFormState> {
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   formRef = React.createRef<HTMLFormElement>();
@@ -34,37 +40,32 @@ class Form extends React.Component<IFormProps, IFormState> {
   handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    this.titleRef.current?.value && this.titleRef.current?.value.length > 4
-      ? this.setState({ alertTitle: false })
-      : this.setState({ alertTitle: true });
+    const titleValidation = this.titleRef.current?.value && this.titleRef.current?.value.length > 4;
+    this.setState({ alertTitle: titleValidation ? false : true });
 
-    this.dateRef.current?.value && this.dateRef.current?.value < '2023-03-27'
-      ? this.setState({ alertDate: false })
-      : this.setState({ alertDate: true });
+    const dateValidation = this.dateRef.current?.value && this.dateRef.current?.value <= todayDate;
+    this.setState({ alertDate: dateValidation ? false : true });
 
-    this.brandRef.current?.value != 'choose'
-      ? this.setState({ alertBrand: false })
-      : this.setState({ alertBrand: true });
+    const brandValidation = this.brandRef.current?.value != '';
+    this.setState({ alertBrand: brandValidation ? false : true });
 
-    this.withDiscountRef.current?.checked || this.withoutDiscountRef.current?.checked
-      ? this.setState({ alertDiscount: false })
-      : this.setState({ alertDiscount: true });
+    const discountValidation =
+      this.withDiscountRef.current?.checked || this.withoutDiscountRef.current?.checked;
+    this.setState({ alertDiscount: discountValidation ? false : true });
 
-    this.thumbnailRef?.current?.files?.length
-      ? this.setState({ alertThumbnail: false })
-      : this.setState({ alertThumbnail: true });
+    const thumbnailValidation = this.thumbnailRef?.current?.files?.length;
+    this.setState({ alertThumbnail: thumbnailValidation ? false : true });
 
-    this.agreeRef.current?.checked
-      ? this.setState({ alertAgree: false })
-      : this.setState({ alertAgree: true });
+    const agreeValidation = this.agreeRef.current?.checked;
+    this.setState({ alertAgree: agreeValidation ? false : true });
 
     if (
-      this.titleRef.current?.value &&
-      this.dateRef.current?.value &&
-      this.brandRef.current?.value != 'choose' &&
-      (this.withDiscountRef.current?.checked || this.withoutDiscountRef.current?.checked) &&
-      this.thumbnailRef?.current?.files?.length &&
-      this.agreeRef.current?.checked
+      titleValidation &&
+      dateValidation &&
+      brandValidation &&
+      discountValidation &&
+      thumbnailValidation &&
+      agreeValidation
     ) {
       this.props.addProduct({
         id: this.state.id,
@@ -83,13 +84,13 @@ class Form extends React.Component<IFormProps, IFormState> {
     }
   }
 
+  handleChange() {
+    this.setState({ message: false });
+  }
+
   render() {
     return (
-      <form
-        ref={this.formRef}
-        onSubmit={this.handleSubmit}
-        onChange={() => this.setState({ message: false })}
-      >
+      <form ref={this.formRef} onSubmit={this.handleSubmit} onChange={this.handleChange}>
         <fieldset className={styles.form}>
           <legend className={styles.form_title}>Product card</legend>
           <fieldset className={styles.form_field}>
@@ -100,29 +101,21 @@ class Form extends React.Component<IFormProps, IFormState> {
               className={styles.form_input}
               placeholder="Enter product name"
             />
-            {this.state.alertTitle && (
-              <p className={styles.form_alert}>Please enter a name longer than 5 letters</p>
-            )}
+            {this.state.alertTitle && <p className={styles.form_alert}>{ValidationAlert.Title}</p>}
           </fieldset>
 
           <fieldset className={styles.form_field}>
             <legend className={styles.form_subtitle}>Release date</legend>
             <input ref={this.dateRef} type="date" className={styles.form_input} />
-            {this.state.alertDate && (
-              <p className={styles.form_alert}>Please enter a date no earlier than today</p>
-            )}
+            {this.state.alertDate && <p className={styles.form_alert}>{ValidationAlert.Date}</p>}
           </fieldset>
 
           <fieldset className={styles.form_field}>
             <legend className={styles.form_subtitle}>Product brand</legend>
             <select ref={this.brandRef} className={styles.form_input}>
-              <option value="choose" hidden>
-                Choose a brand
-              </option>
-              <option value="Xiaomi">Xiaomi</option>
-              <option value="Apple">Apple</option>
+              <BrandList />
             </select>
-            {this.state.alertBrand && <p className={styles.form_alert}>Please choose a brand</p>}
+            {this.state.alertBrand && <p className={styles.form_alert}>{ValidationAlert.Brand}</p>}
           </fieldset>
 
           <fieldset className={styles.form_field}>
@@ -137,7 +130,7 @@ class Form extends React.Component<IFormProps, IFormState> {
             />
             <label htmlFor="withoutDiscount">Without discount</label>
             {this.state.alertDiscount && (
-              <p className={styles.form_alert}>Please select one of the options</p>
+              <p className={styles.form_alert}>{ValidationAlert.Discount}</p>
             )}
           </fieldset>
 
@@ -145,7 +138,7 @@ class Form extends React.Component<IFormProps, IFormState> {
             <legend className={styles.form_subtitle}>Product image</legend>
             <input ref={this.thumbnailRef} type="file" accept="image/png, image/jpeg" />
             {this.state.alertThumbnail && (
-              <p className={styles.form_alert}>Please upload an image</p>
+              <p className={styles.form_alert}>{ValidationAlert.Thumbnail}</p>
             )}
           </fieldset>
 
@@ -153,18 +146,14 @@ class Form extends React.Component<IFormProps, IFormState> {
             <legend className={styles.form_subtitle}>Agreement</legend>
             <input ref={this.agreeRef} type="checkbox" id="agree" />
             <label htmlFor="agree">I consent to the processing of data</label>
-            {this.state.alertAgree && (
-              <p className={styles.form_alert}>
-                Please give your consent to the processing of data
-              </p>
-            )}
+            {this.state.alertAgree && <p className={styles.form_alert}>{ValidationAlert.Agree}</p>}
           </fieldset>
 
           {this.state.message && (
             <p className={styles.form_message}>
-              Product card has been successfully created.
+              {SubmitAlert.Success}
               <br />
-              You can create another card.
+              {SubmitAlert.Another}
             </p>
           )}
 

@@ -90,3 +90,12 @@
     }
   }
 }
+
+::-webkit-file-upload-button {
+  font: {
+    family: 'Russo One', sans-serif;
+    size: 1rem;
+    weight: 100;
+  }
+  cursor: pointer;
+}
