@@ -1,6 +1,6 @@
 export enum ValidationAlert {
   Title = 'Please enter a name longer than 5 letters',
-  Date = 'Please enter a date no later than this year',
+  Date = 'Please enter a date no later than today',
   Brand = 'Please choose a brand from list',
   Discount = 'Please select one of the discount options',
   Thumbnail = 'Please upload an image',

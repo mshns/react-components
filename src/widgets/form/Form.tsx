@@ -7,6 +7,7 @@ import styles from './Form.module.scss';
 import { IFormProps, IFormState } from './types/interfaces';
 
 import { ValidationAlert, SubmitAlert } from './constants/messages';
+import todayDate from './helpers/today';
 
 class Form extends React.Component<IFormProps, IFormState> {
   constructor(props: IFormProps) {
@@ -42,11 +43,10 @@ class Form extends React.Component<IFormProps, IFormState> {
     const titleValidation = this.titleRef.current?.value && this.titleRef.current?.value.length > 4;
     this.setState({ alertTitle: titleValidation ? false : true });
 
-    const dateValidation =
-      this.dateRef.current?.value && this.dateRef.current?.value < '2024-01-01';
+    const dateValidation = this.dateRef.current?.value && this.dateRef.current?.value <= todayDate;
     this.setState({ alertDate: dateValidation ? false : true });
 
-    const brandValidation = this.brandRef.current?.value != 'choose';
+    const brandValidation = this.brandRef.current?.value != '';
     this.setState({ alertBrand: brandValidation ? false : true });
 
     const discountValidation =
@@ -113,9 +113,6 @@ class Form extends React.Component<IFormProps, IFormState> {
           <fieldset className={styles.form_field}>
             <legend className={styles.form_subtitle}>Product brand</legend>
             <select ref={this.brandRef} className={styles.form_input}>
-              <option value="choose" hidden>
-                Choose a brand
-              </option>
               <BrandList />
             </select>
             {this.state.alertBrand && <p className={styles.form_alert}>{ValidationAlert.Brand}</p>}

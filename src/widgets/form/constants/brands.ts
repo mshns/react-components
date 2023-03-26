@@ -1,4 +1,5 @@
 const brands = [
+  { id: 0, name: '— Choose a brand', value: '' },
   { id: 1, name: 'Xiaomi', value: 'Xiaomi' },
   { id: 2, name: 'Apple', value: 'Apple' },
   { id: 3, name: 'Samsung', value: 'Samsung' },
