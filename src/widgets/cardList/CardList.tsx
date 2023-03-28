@@ -1,20 +1,18 @@
-import React from 'react';
+import { IProduct } from '../../app/types/interfaces';
 import Card from '../card/Card';
 
 import './CardList.scss';
 
 import productList from './productList';
 
-class CardList extends React.Component {
-  render() {
-    return (
-      <div className="card-list">
-        {productList.map((item) => (
-          <Card card={item} key={item.id} />
-        ))}
-      </div>
-    );
-  }
-}
+const CardList = () => {
+  return (
+    <div className="card-list">
+      {productList.map((item: IProduct) => (
+        <Card card={item} key={item.id} />
+      ))}
+    </div>
+  );
+};
 
 export default CardList;

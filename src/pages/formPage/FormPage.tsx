@@ -7,8 +7,8 @@ import styles from './FormPage.module.scss';
 
 import { IProduct, IProductList } from '../../app/types/interfaces';
 
-class FormPage extends React.Component<Record<string, never>, IProductList> {
-  constructor(props: Record<string, never>) {
+class FormPage extends React.Component<Record<string, unknown>, IProductList> {
+  constructor(props: Record<string, unknown>) {
     super(props);
 
     this.state = {
@@ -27,7 +27,7 @@ class FormPage extends React.Component<Record<string, never>, IProductList> {
           <Form addProduct={this.addProduct} />
         </section>
         <section className={styles.section}>
-          {this.state.productList.map((item) => (
+          {this.state.productList.map((item: IProduct) => (
             <Card card={item} key={item.id} />
           ))}
         </section>

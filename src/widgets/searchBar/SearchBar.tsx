@@ -4,8 +4,8 @@ import styles from './SearchBar.module.scss';
 
 import { ISearchState } from './types/interfaces';
 
-class SearchBar extends React.Component<Record<string, never>, ISearchState> {
-  constructor(props: Record<string, never>) {
+class SearchBar extends React.Component<Record<string, unknown>, ISearchState> {
+  constructor(props: Record<string, unknown>) {
     super(props);
 
     this.state = {
