@@ -28,14 +28,7 @@ class FormPage extends React.Component<Record<string, never>, IProductList> {
         </section>
         <section className={styles.section}>
           {this.state.productList.map((item) => (
-            <Card
-              title={item.title}
-              date={item.date}
-              discount={item.discount}
-              brand={item.brand}
-              thumbnail={item.thumbnail}
-              key={item.id}
-            />
+            <Card card={item} key={item.id} />
           ))}
         </section>
       </main>
