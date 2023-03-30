@@ -100,7 +100,7 @@ describe('FormPage', () => {
   it('renders card after submit and validation', () => {
     render(<FormPage />);
     async () => {
-      await act(() => {
+      await act(async () => {
         const inputName = screen.getByPlaceholderText('Enter product name');
         fireEvent.change(inputName, { target: { value: 'Nokia 3310' } });
 
