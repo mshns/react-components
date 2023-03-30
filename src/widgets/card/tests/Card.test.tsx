@@ -7,13 +7,15 @@ describe('Card', () => {
   it('renders title', () => {
     render(
       <Card
-        title={'Realme 10 4G'}
-        date={'2023-03-24'}
-        discount={true}
-        brand={'Realme'}
-        thumbnail={
-          'https://raw.githubusercontent.com/mshns/online-store/develop/src/assets/data/3/thumbnail.jpg'
-        }
+        card={{
+          id: 1,
+          title: 'Realme 10 4G',
+          date: '2023-03-24',
+          discount: true,
+          brand: 'Realme',
+          thumbnail:
+            'https://raw.githubusercontent.com/mshns/online-store/develop/src/assets/data/3/thumbnail.jpg',
+        }}
       />
     );
     expect(
@@ -26,13 +28,15 @@ describe('Card', () => {
   it('renders image', () => {
     render(
       <Card
-        title={'Xiaomi 12 Pro'}
-        date={'2023-01-20'}
-        discount={false}
-        brand={'Xiaomi'}
-        thumbnail={
-          'https://raw.githubusercontent.com/mshns/online-store/develop/src/assets/data/2/thumbnail.jpg'
-        }
+        card={{
+          id: 2,
+          title: 'Xiaomi 12 Pro',
+          date: '2023-01-20',
+          discount: false,
+          brand: 'Xiaomi',
+          thumbnail:
+            'https://raw.githubusercontent.com/mshns/online-store/develop/src/assets/data/2/thumbnail.jpg',
+        }}
       />
     );
     const image = screen.getByAltText('Xiaomi 12 Pro');

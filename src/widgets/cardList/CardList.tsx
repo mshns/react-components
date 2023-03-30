@@ -1,7 +1,8 @@
-import { IProduct } from '../../app/types/interfaces';
 import Card from '../card/Card';
 
 import './CardList.scss';
+
+import { IProduct } from '../../app/types/interfaces';
 
 import productList from './productList';
 

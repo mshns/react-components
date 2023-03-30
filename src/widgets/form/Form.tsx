@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 import BrandList from './components/BrandList';
 
@@ -10,130 +11,102 @@ import { ValidationAlert, SubmitAlert } from './constants/messages';
 import todayDate from './helpers/today';
 
 const Form = ({ setProductList }: IFormProps) => {
-  const formRef = useRef<HTMLFormElement | null>(null);
-  const titleRef = useRef<HTMLInputElement | null>(null);
-  const dateRef = useRef<HTMLInputElement | null>(null);
-  const brandRef = useRef<HTMLSelectElement | null>(null);
-  const withDiscountRef = useRef<HTMLInputElement | null>(null);
-  const withoutDiscountRef = useRef<HTMLInputElement | null>(null);
-  const thumbnailRef = useRef<HTMLInputElement | null>(null);
-  const agreeRef = useRef<HTMLInputElement | null>(null);
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    reset,
+  } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
 
-  const [alertTitle, setAlertTitle] = useState(false);
-  const [alertDate, setAlertDate] = useState(false);
-  const [alertBrand, setAlertBrand] = useState(false);
-  const [alertDiscount, setAlertDiscount] = useState(false);
-  const [alertThumbnail, setAlertThumbnail] = useState(false);
-  const [alertAgree, setAlertAgree] = useState(false);
-  const [id, setId] = useState(1);
-  const [message, setMessage] = useState(false);
+  const [cardId, setCardId] = useState(1);
+  const [submitAlert, setSubmitAlert] = useState(false);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const titleValidation = titleRef.current?.value && titleRef.current?.value.length > 4;
-    setAlertTitle(titleValidation ? false : true);
-
-    const dateValidation = dateRef.current?.value && dateRef.current?.value <= todayDate;
-    setAlertDate(dateValidation ? false : true);
-
-    const brandValidation = brandRef.current?.value != '';
-    setAlertBrand(brandValidation ? false : true);
-
-    const discountValidation =
-      withDiscountRef.current?.checked || withoutDiscountRef.current?.checked;
-    setAlertDiscount(discountValidation ? false : true);
-
-    const thumbnailValidation = thumbnailRef?.current?.files?.length;
-    setAlertThumbnail(thumbnailValidation ? false : true);
-
-    const agreeValidation = agreeRef.current?.checked;
-    setAlertAgree(agreeValidation ? false : true);
-
-    if (
-      titleValidation &&
-      dateValidation &&
-      brandValidation &&
-      discountValidation &&
-      thumbnailValidation &&
-      agreeValidation
-    ) {
-      setProductList((prev) => [
-        ...prev,
-        {
-          id: id,
-          title: titleRef.current?.value ?? '',
-          date: dateRef.current?.value ?? '',
-          discount: withDiscountRef.current?.checked ?? false,
-          brand: brandRef.current?.value ?? '',
-          thumbnail: thumbnailRef?.current?.files
-            ? URL.createObjectURL(thumbnailRef.current.files[0])
-            : '',
-        },
-      ]);
-
-      setMessage(true);
-      formRef.current?.reset();
-      setId((prev) => prev + 1);
-    }
-  };
+  const onSubmit = handleSubmit((data) => {
+    setProductList((prev) => [
+      ...prev,
+      {
+        id: cardId,
+        title: data.title,
+        date: data.date,
+        discount: data.discount === 'withDiscount',
+        brand: data.brand,
+        thumbnail: URL.createObjectURL(data.thumbnail[0]),
+      },
+    ]);
+    reset();
+    setSubmitAlert(true);
+    setCardId((prev) => prev + 1);
+  });
 
   const handleChange = () => {
-    setMessage(false);
+    setSubmitAlert(false);
   };
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} onChange={handleChange}>
+    <form onSubmit={onSubmit} onChange={handleChange}>
       <fieldset className={styles.form}>
         <legend className={styles.form_title}>Product card</legend>
         <fieldset className={styles.form_field}>
           <legend className={styles.form_subtitle}>Product name</legend>
           <input
-            ref={titleRef}
+            {...register('title', { required: true, pattern: /^[A-ZА-Я]{1}[\S\s]{0,30}$/ })}
             type="text"
             className={styles.form_input}
             placeholder="Enter product name"
           />
-          {alertTitle && <p className={styles.form_alert}>{ValidationAlert.Title}</p>}
+          {errors?.title && <p className={styles.form_alert}>{ValidationAlert.Title}</p>}
         </fieldset>
 
         <fieldset className={styles.form_field}>
           <legend className={styles.form_subtitle}>Release date</legend>
-          <input ref={dateRef} type="date" className={styles.form_input} />
-          {alertDate && <p className={styles.form_alert}>{ValidationAlert.Date}</p>}
+          <input
+            {...register('date', { required: true, validate: (value) => value <= todayDate })}
+            type="date"
+            className={styles.form_input}
+          />
+          {errors?.date && <p className={styles.form_alert}>{ValidationAlert.Date}</p>}
         </fieldset>
 
         <fieldset className={styles.form_field}>
           <legend className={styles.form_subtitle}>Product brand</legend>
-          <select ref={brandRef} className={styles.form_input}>
+          <select {...register('brand', { required: true })} className={styles.form_input}>
             <BrandList />
           </select>
-          {alertBrand && <p className={styles.form_alert}>{ValidationAlert.Brand}</p>}
+          {errors?.brand && <p className={styles.form_alert}>{ValidationAlert.Brand}</p>}
         </fieldset>
 
         <fieldset className={styles.form_field}>
           <legend className={styles.form_subtitle}>Discounted</legend>
-          <input ref={withDiscountRef} type="radio" id="withDiscount" name="discount" />
+          <input
+            {...register('discount', { required: true })}
+            type="radio"
+            id="withDiscount"
+            value="withDiscount"
+          />
           <label htmlFor="withDiscount">On sale</label>
-          <input ref={withoutDiscountRef} type="radio" id="withoutDiscount" name="discount" />
+          <input {...register('discount', { required: true })} type="radio" id="withoutDiscount" />
           <label htmlFor="withoutDiscount">Without discount</label>
-          {alertDiscount && <p className={styles.form_alert}>{ValidationAlert.Discount}</p>}
+          {errors?.discount && <p className={styles.form_alert}>{ValidationAlert.Discount}</p>}
         </fieldset>
 
         <fieldset className={styles.form_field}>
           <legend className={styles.form_subtitle}>Product image</legend>
-          <input ref={thumbnailRef} type="file" accept="image/png, image/jpeg" />
-          {alertThumbnail && <p className={styles.form_alert}>{ValidationAlert.Thumbnail}</p>}
+          <input
+            {...register('thumbnail', { required: true })}
+            type="file"
+            accept="image/png, image/jpeg"
+          />
+          {errors?.thumbnail && <p className={styles.form_alert}>{ValidationAlert.Thumbnail}</p>}
         </fieldset>
 
         <fieldset className={styles.form_field}>
           <legend className={styles.form_subtitle}>Agreement</legend>
-          <input ref={agreeRef} type="checkbox" id="agree" />
+          <input {...register('agree', { required: true })} type="checkbox" id="agree" />
           <label htmlFor="agree">I consent to the processing of data</label>
-          {alertAgree && <p className={styles.form_alert}>{ValidationAlert.Agree}</p>}
+          {errors?.agree && <p className={styles.form_alert}>{ValidationAlert.Agree}</p>}
         </fieldset>
 
-        {message && (
+        {submitAlert && (
           <p className={styles.form_message}>
             {SubmitAlert.Success}
             <br />
