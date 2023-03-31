@@ -1,14 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import styles from './SearchBar.module.scss';
 
 const SearchBar = () => {
   const searchValueStorage = localStorage.getItem('searchInputValue');
   const [searchValue, setSearchValue] = useState(searchValueStorage ?? '');
+  const searchValueRef = useRef('');
 
   useEffect(() => {
-    localStorage.setItem('searchInputValue', searchValue);
+    searchValueRef.current = searchValue;
   }, [searchValue]);
+
+  useEffect(() => {
+    return () => {
+      localStorage.setItem('searchInputValue', searchValueRef.current);
+    };
+  }, []);
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
     setSearchValue(event.currentTarget.value);
