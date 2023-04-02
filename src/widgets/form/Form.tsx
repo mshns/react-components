@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import BrandList from './components/BrandList';
-
 import styles from './Form.module.scss';
 
 import { IFormProps } from './types/interfaces';
 
+import brands from './constants/brands';
 import { ValidationAlert, SubmitAlert } from './constants/messages';
 import todayDate from './helpers/today';
 
@@ -49,7 +48,7 @@ const Form = ({ setProductList }: IFormProps) => {
         <fieldset className={styles.form_field}>
           <legend className={styles.form_subtitle}>Product name</legend>
           <input
-            {...register('title', { required: true, pattern: /^[A-ZА-Я]{1}[\S\s]{0,30}$/ })}
+            {...register('title', { required: true, pattern: /^[A-ZА-Я]{1}[\S\s]{2,29}$/ })}
             type="text"
             className={styles.form_input}
             placeholder="Enter product name"
@@ -70,7 +69,11 @@ const Form = ({ setProductList }: IFormProps) => {
         <fieldset className={styles.form_field}>
           <legend className={styles.form_subtitle}>Product brand</legend>
           <select {...register('brand', { required: true })} className={styles.form_input}>
-            <BrandList />
+            {brands.map((item) => (
+              <option value={item.value} key={item.id}>
+                {item.name}
+              </option>
+            ))}
           </select>
           {errors?.brand && <p className={styles.form_alert}>{ValidationAlert.Brand}</p>}
         </fieldset>

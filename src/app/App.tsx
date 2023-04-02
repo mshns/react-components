@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 import Layout from './layout/Layout';
 
@@ -18,7 +18,8 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/form" element={<FormPage />} />
         </Route>
-        <Route path="*" element={<NotFound />} />
+        <Route path="/not-found" element={<NotFound />} />
+        <Route path="*" element={<Navigate to="/not-found" />} />
       </Routes>
     </div>
   );

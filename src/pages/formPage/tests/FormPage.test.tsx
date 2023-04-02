@@ -1,4 +1,4 @@
-import { describe, it, vi } from 'vitest';
+import { describe, it } from 'vitest';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 
 import FormPage from '../FormPage';
@@ -12,16 +12,14 @@ describe('FormPage', () => {
     expect(submitButton).toBeInTheDocument;
   });
 
-  it('renders alert message before validation', () => {
+  it('renders alert message before validation', async () => {
     render(<FormPage />);
-    async () => {
-      await act(async () => {
-        const submitButton = screen.getByRole('button');
-        fireEvent.click(submitButton);
-      });
-      const alert = screen.getByText('Please upload an image');
-      expect(alert).toBeInTheDocument;
-    };
+    await act(async () => {
+      const submitButton = screen.getByRole('button');
+      fireEvent.click(submitButton);
+    });
+    const alert = screen.getByText('Please upload an image');
+    expect(alert).toBeInTheDocument;
   });
 
   it('validates product name value', () => {
@@ -95,36 +93,5 @@ describe('FormPage', () => {
     });
     const alert = screen.queryByText(ValidationAlert.Agree);
     expect(alert).toBeNull();
-  });
-
-  it('renders card after submit and validation', () => {
-    render(<FormPage />);
-    async () => {
-      await act(async () => {
-        const inputName = screen.getByPlaceholderText('Enter product name');
-        fireEvent.change(inputName, { target: { value: 'Nokia 3310' } });
-
-        const inputs = document.querySelectorAll('input');
-        fireEvent.change(inputs[1], { target: { value: '2022-02-02' } });
-
-        const select = screen.getByRole('combobox');
-        fireEvent.change(select, { target: { value: 'Nokia' } });
-
-        const radio = screen.getAllByRole('radio');
-        fireEvent.click(radio[0]);
-
-        window.URL.createObjectURL = vi.fn();
-        const thumbnail = new File(['hello'], 'hello.png', { type: 'image/png' });
-        fireEvent.change(inputs[4], { target: { files: [thumbnail] } });
-
-        const checkbox = screen.getByRole('checkbox');
-        fireEvent.click(checkbox);
-
-        const submitButton = screen.getByRole('button');
-        fireEvent.click(submitButton);
-      });
-      const cardTitle = screen.getByRole('heading', { level: 3 });
-      expect(cardTitle).toHaveTextContent('Nokia 3310');
-    };
   });
 });

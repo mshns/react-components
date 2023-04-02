@@ -1,28 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 
 import './Header.scss';
 
 const Header = () => {
+  const location = useLocation();
   const [pageTitle, setPageTitle] = useState('');
 
   useEffect(() => {
-    switch (window.location.pathname) {
-      case '/':
+    switch (location.pathname.replace(/\//g, '')) {
+      case '':
         setPageTitle('Home Page');
         break;
-      case '/about':
+      case 'about':
         setPageTitle('About Us');
         break;
-      case '/form':
+      case 'form':
         setPageTitle('Form Page');
         break;
     }
-  }, []);
-
-  const handleClick = (title: string) => {
-    setPageTitle(title);
-  };
+  }, [location.pathname]);
 
   return (
     <header className="header">
@@ -30,25 +27,17 @@ const Header = () => {
       <nav className="header_navigation">
         <ul className="navigation-list">
           <li className="navigation-item">
-            <NavLink to="/" className="navigation-link" onClick={() => handleClick('Home Page')}>
+            <NavLink to="/" className="navigation-link">
               Home
             </NavLink>
           </li>
           <li className="navigation-item">
-            <NavLink
-              to="/about"
-              className="navigation-link"
-              onClick={() => handleClick('About Us')}
-            >
+            <NavLink to="/about" className="navigation-link">
               About
             </NavLink>
           </li>
           <li className="navigation-item">
-            <NavLink
-              to="/form"
-              className="navigation-link"
-              onClick={() => handleClick('Form Page')}
-            >
+            <NavLink to="/form" className="navigation-link">
               Form
             </NavLink>
           </li>
