@@ -1,7 +1,7 @@
 import { IProduct } from '../../../app/types/interfaces';
 
 export interface IFormProps {
-  addProduct: (product: IProduct) => void;
+  setProductList: React.Dispatch<React.SetStateAction<IProduct[]>>;
 }
 
 export interface IFormState {
