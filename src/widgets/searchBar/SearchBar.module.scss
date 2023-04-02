@@ -1,0 +1,84 @@
+.search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  margin: 1rem auto;
+  border-radius: 0.5rem;
+  background-color: rgb(50, 50, 50);
+
+  &::before {
+    position: absolute;
+    left: 1.2rem;
+    top: 1rem;
+    content: 'search';
+    font: {
+      family: 'Material Symbols Outlined';
+      size: 1.5rem;
+      weight: 600;
+    }
+    color: rgb(50, 50, 50);
+  }
+
+  &_input,
+  &_button {
+    padding: 0.2rem 0.2rem 0.25rem 2rem;
+    border: none {
+      radius: 0.1rem;
+    }
+    outline: none;
+    font: {
+      family: 'Russo One', sans-serif;
+      size: 1rem;
+      weight: 100;
+    }
+    transition: ease-in-out 0.2s;
+  }
+
+  &_input {
+    width: 50vw;
+    background-color: rgb(255, 255, 255, 0.75);
+    &:hover,
+    &:focus {
+      background-color: rgb(255, 255, 255, 1);
+    }
+    &::-webkit-search-cancel-button {
+      -webkit-appearance: none;
+      width: 1rem;
+      height: 1rem;
+      margin-left: 1rem;
+      background: linear-gradient(
+          45deg,
+          transparent 0%,
+          transparent 43%,
+          rgb(50, 50, 50) 45%,
+          rgb(50, 50, 50) 55%,
+          transparent 57%,
+          transparent 100%
+        ),
+        linear-gradient(
+          135deg,
+          transparent 0%,
+          transparent 43%,
+          rgb(50, 50, 50) 45%,
+          rgb(50, 50, 50) 55%,
+          transparent 57%,
+          transparent 100%
+        );
+      cursor: pointer;
+    }
+  }
+
+  &_button {
+    padding: 0.2rem 0.4rem;
+    margin-left: 0.5rem;
+    color: rgb(50, 50, 50);
+    text-transform: uppercase;
+    background-color: rgb(255, 255, 255, 0.75);
+    cursor: pointer;
+    &:hover {
+      color: rgb(0, 0, 0);
+      background-color: rgb(97, 218, 251);
+    }
+  }
+}
