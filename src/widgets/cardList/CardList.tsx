@@ -1,16 +1,13 @@
-import Card from '../card/Card';
-
 import './CardList.scss';
+import CardItem from '../cardItem/CardItem';
+import { ICardItem, ICardList } from '../cardItem/types/interfaces';
 
-import { IProduct } from '../../app/types/interfaces';
-
-import productList from './productList';
-
-const CardList = () => {
+const CardList = ({ itemList }: ICardList) => {
+  console.log(itemList);
   return (
     <div className="card-list">
-      {productList.map((item: IProduct) => (
-        <Card card={item} key={item.id} />
+      {itemList.map((item: ICardItem) => (
+        <CardItem card={item} key={item.id} />
       ))}
     </div>
   );
