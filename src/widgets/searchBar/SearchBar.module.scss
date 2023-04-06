@@ -1,6 +1,7 @@
 .search {
   position: relative;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   padding: 1rem;
   margin: 1rem auto;
@@ -80,5 +81,21 @@
       color: rgb(0, 0, 0);
       background-color: rgb(97, 218, 251);
     }
+  }
+
+  &_error {
+    position: absolute;
+    left: 0;
+    top: 2.2rem;
+    width: 100%;
+    text: {
+      align: center;
+      transform: uppercase;
+    }
+    font: {
+      size: 0.6rem;
+      weight: 100;
+    }
+    color: rgb(255, 0, 0);
   }
 }
