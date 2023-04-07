@@ -25,3 +25,8 @@ export interface ICardItem {
 export interface ICardList {
   itemList: ICardItem[];
 }
+
+export interface ICardItemProps {
+  card: ICardItem;
+  setModalActive: React.Dispatch<React.SetStateAction<boolean>>;
+}

@@ -1,10 +1,10 @@
-import { ICardItem } from './types/interfaces';
+import { ICardItemProps } from './types/interfaces';
 
 import styles from './CardItem.module.scss';
 
-const CardItem = ({ card }: { card: ICardItem }) => {
+const CardItem = ({ card, setModalActive }: ICardItemProps) => {
   return (
-    <div className={styles.card}>
+    <div className={styles.card} onClick={() => setModalActive(true)}>
       <img className={styles.card_image} src={card.urls.regular} alt={card.description} />
       <h3 className={styles.card_title}>{card.description ?? 'Untitled'}</h3>
       <h4 className={styles.card_date}>{card.created_at.split('T')[0]}</h4>

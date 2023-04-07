@@ -1,9 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import styles from './SearchBar.module.scss';
 
-const SearchBar = ({ setQuery }: { setQuery: React.Dispatch<React.SetStateAction<string>> }) => {
+import { ISearchBar } from './types/interfaces';
+
+const SearchBar = ({ setQuery }: ISearchBar) => {
   const {
     register,
     formState: { errors },
@@ -34,11 +36,8 @@ const SearchBar = ({ setQuery }: { setQuery: React.Dispatch<React.SetStateAction
       <input
         {...register('search', {
           required: 'Please enter a search term',
-          pattern: { value: /^[a-z\s]+$/i, message: 'Please enter a search term in English' },
         })}
         type="search"
-        value={searchValue}
-        onChange={(event) => setSearchValue(event.currentTarget.value)}
         className={styles.search_input}
         placeholder="Enter a search term..."
       />

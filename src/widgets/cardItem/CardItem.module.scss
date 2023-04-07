@@ -15,6 +15,9 @@
   &:hover {
     border: 1px solid rgb(97, 218, 251, 1);
   }
+  &:hover &_image {
+    transform: scale(1.1);
+  }
 
   &_discount {
     position: absolute;
@@ -30,8 +33,10 @@
   }
 
   &_image {
-    width: auto;
+    width: 260px;
     height: 260px;
+    object-fit: cover;
+    transition: ease-in-out .4s;
   }
 
   &_title {
