@@ -7,9 +7,11 @@ import { apiURL, apiID } from './constants/unsplash';
 
 const Home = () => {
   const [itemList, setItemList] = useState([]);
-  const [query, setQuery] = useState('photo');
+  const searchValueStorage = localStorage.getItem('searchInputValue');
+  const [query, setQuery] = useState(searchValueStorage ?? '');
 
   useEffect(() => {
+    if (query === '') setQuery('spring');
     const resource = apiURL + query + apiID;
     fetch(resource)
       .then((response) => response.json())

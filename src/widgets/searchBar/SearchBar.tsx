@@ -1,48 +1,36 @@
-import { useEffect, useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
 
 import styles from './SearchBar.module.scss';
 
 import { ISearchBar } from './types/interfaces';
 
 const SearchBar = ({ setQuery }: ISearchBar) => {
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm({ mode: 'onSubmit' });
-
   const searchValueStorage = localStorage.getItem('searchInputValue');
   const [searchValue, setSearchValue] = useState(searchValueStorage ?? '');
-  const searchValueRef = useRef('');
 
   useEffect(() => {
-    searchValueRef.current = searchValue;
+    localStorage.setItem('searchInputValue', searchValue);
   }, [searchValue]);
 
-  useEffect(() => {
-    return () => {
-      localStorage.setItem('searchInputValue', searchValueRef.current);
-    };
-  }, []);
+  const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
+    setSearchValue(event.currentTarget.value);
+  };
 
-  const onSubmit = handleSubmit((data) => {
-    setQuery(data.search);
-    localStorage.setItem('searchInputValue', data.search);
-  });
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setQuery(searchValue);
+    localStorage.setItem('searchInputValue', searchValue);
+  };
 
   return (
-    <form className={styles.search} onSubmit={onSubmit}>
+    <form className={styles.search} onSubmit={handleSubmit}>
       <input
-        {...register('search', {
-          required: 'Please enter a search term',
-        })}
         type="search"
+        value={searchValue}
+        onChange={handleChange}
         className={styles.search_input}
         placeholder="Enter a search term..."
       />
-
-      {errors?.search && <p className={styles.search_error}>{errors.search.message?.toString()}</p>}
 
       <button type="submit" className={styles.search_button}>
         Search

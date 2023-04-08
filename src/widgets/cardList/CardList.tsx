@@ -14,6 +14,8 @@ const CardList = ({ itemList }: ICardList) => {
 
   return (
     <div className="card-list">
+      {!itemList.length && <p>Nothing found for your request. Please try again...</p>}
+
       {itemList.map((item: ICardItem, index: number) => (
         <CardItem
           card={item}
@@ -23,6 +25,7 @@ const CardList = ({ itemList }: ICardList) => {
           index={index}
         />
       ))}
+
       {modalActive && <Modal card={itemList[cardActive]} setModalActive={setModalActive} />}
     </div>
   );
