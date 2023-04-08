@@ -2,9 +2,14 @@ import { ICardItemProps } from './types/interfaces';
 
 import styles from './CardItem.module.scss';
 
-const CardItem = ({ card, setModalActive }: ICardItemProps) => {
+const CardItem = ({ card, setModalActive, setCardActive, index }: ICardItemProps) => {
+  const handleClick = () => {
+    setModalActive(true);
+    setCardActive(index);
+  };
+
   return (
-    <div className={styles.card} onClick={() => setModalActive(true)}>
+    <div className={styles.card} onClick={handleClick}>
       <img className={styles.card_image} src={card.urls.regular} alt={card.description} />
       <h3 className={styles.card_title}>{card.description ?? 'Untitled'}</h3>
       <h4 className={styles.card_date}>{card.created_at.split('T')[0]}</h4>

@@ -12,14 +12,31 @@ interface ITags {
   title: string;
 }
 
+interface ILinks {
+  download: string;
+  download_location: string;
+  html: string;
+  self: string;
+}
+
+interface IUser {
+  id: string;
+  updated_at: string;
+  username: string;
+  name: string;
+}
+
 export interface ICardItem {
   id: string;
   urls: IUrls;
   description: string;
+  alt_description: string;
   created_at: string;
+  updated_at: string;
   likes: number;
-  user: string;
+  user: IUser;
   tags: ITags[];
+  links: ILinks;
 }
 
 export interface ICardList {
@@ -29,4 +46,6 @@ export interface ICardList {
 export interface ICardItemProps {
   card: ICardItem;
   setModalActive: React.Dispatch<React.SetStateAction<boolean>>;
+  setCardActive: React.Dispatch<React.SetStateAction<number>>;
+  index: number;
 }
