@@ -1,6 +1,4 @@
-import { ICardItem } from '../../cardItem/types/interfaces';
-
 export interface IModal {
-  card: ICardItem;
+  cardActive: string;
   setModalActive: React.Dispatch<React.SetStateAction<boolean>>;
 }

@@ -46,6 +46,5 @@ export interface ICardList {
 export interface ICardItemProps {
   card: ICardItem;
   setModalActive: React.Dispatch<React.SetStateAction<boolean>>;
-  setCardActive: React.Dispatch<React.SetStateAction<number>>;
-  index: number;
+  setCardActive: React.Dispatch<React.SetStateAction<string>>;
 }

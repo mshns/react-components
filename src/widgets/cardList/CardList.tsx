@@ -9,24 +9,24 @@ import { ICardItem, ICardList } from '../cardItem/types/interfaces';
 
 const CardList = ({ itemList }: ICardList) => {
   const [modalActive, setModalActive] = useState(false);
-  const [cardActive, setCardActive] = useState(0);
-  console.log(itemList);
+  const [cardActive, setCardActive] = useState('');
 
   return (
     <div className="card-list">
-      {!itemList.length && <p>Nothing found for your request. Please try again...</p>}
+      {!itemList.length ? (
+        <p>Nothing found for your request. Please try again...</p>
+      ) : (
+        itemList.map((item: ICardItem) => (
+          <CardItem
+            card={item}
+            setModalActive={setModalActive}
+            setCardActive={setCardActive}
+            key={item.id}
+          />
+        ))
+      )}
 
-      {itemList.map((item: ICardItem, index: number) => (
-        <CardItem
-          card={item}
-          setModalActive={setModalActive}
-          setCardActive={setCardActive}
-          key={item.id}
-          index={index}
-        />
-      ))}
-
-      {modalActive && <Modal card={itemList[cardActive]} setModalActive={setModalActive} />}
+      {modalActive && <Modal cardActive={cardActive} setModalActive={setModalActive} />}
     </div>
   );
 };
