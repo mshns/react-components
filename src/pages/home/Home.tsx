@@ -15,21 +15,18 @@ const Home = () => {
 
   useEffect(() => {
     setIsLoading(true);
-
-    try {
-      const resource =
-        query === ''
-          ? `${Api.URL}${Api.Random}${Api.ClientID}`
-          : `${Api.URL}${Api.Search}${query}${Api.ClientID}`;
-      fetch(resource)
-        .then((response) => response.json())
-        .then((data) => {
-          query === '' ? setItemList(data) : setItemList(data.results);
-        })
-        .then(() => setIsLoading(false));
-    } catch {
-      setIsError(true);
-    }
+    setIsError(false);
+    const resource =
+      query === ''
+        ? `${Api.URL}${Api.Random}${Api.ClientID}`
+        : `${Api.URL}${Api.Search}${query}${Api.ClientID}`;
+    fetch(resource)
+      .then((response) => response.json())
+      .then((data) => {
+        query === '' ? setItemList(data) : setItemList(data.results);
+      })
+      .then(() => setIsLoading(false))
+      .catch(() => setIsError(true));
   }, [query]);
 
   return (

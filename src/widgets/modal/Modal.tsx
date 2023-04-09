@@ -1,11 +1,14 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+
 import styles from './Modal.module.scss';
 
-import { IModal } from './types/interfaces';
-import { useEffect, useState } from 'react';
-import { Api } from '../../pages/home/constants/unsplash';
-import { ICardItem } from '../cardItem/types/interfaces';
 import Spinner from '../spinner/Spinner';
+
+import { Api } from '../../pages/home/constants/unsplash';
+
+import { IModal } from './types/interfaces';
+import { ICardItem } from '../cardItem/types/interfaces';
 
 const Modal = ({ cardActive, setModalActive }: IModal) => {
   const [isLoading, setIsLoading] = useState(true);
