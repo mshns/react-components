@@ -1,3 +1,3 @@
-export interface ISearchState {
-  searchInputValue: string;
+export interface ISearchBar {
+  setQuery: React.Dispatch<React.SetStateAction<string>>;
 }

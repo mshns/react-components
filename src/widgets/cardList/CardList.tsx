@@ -1,17 +1,32 @@
-import Card from '../card/Card';
+import { useState } from 'react';
 
 import './CardList.scss';
 
-import { IProduct } from '../../app/types/interfaces';
+import CardItem from '../cardItem/CardItem';
+import Modal from '../modal/Modal';
 
-import productList from './productList';
+import { ICardItem, ICardList } from '../cardItem/types/interfaces';
 
-const CardList = () => {
+const CardList = ({ itemList }: ICardList) => {
+  const [modalActive, setModalActive] = useState(false);
+  const [cardActive, setCardActive] = useState('');
+
   return (
     <div className="card-list">
-      {productList.map((item: IProduct) => (
-        <Card card={item} key={item.id} />
-      ))}
+      {!itemList.length ? (
+        <p>Nothing found for your request. Please try again...</p>
+      ) : (
+        itemList.map((item: ICardItem) => (
+          <CardItem
+            card={item}
+            setModalActive={setModalActive}
+            setCardActive={setCardActive}
+            key={item.id}
+          />
+        ))
+      )}
+
+      {modalActive && <Modal cardActive={cardActive} setModalActive={setModalActive} />}
     </div>
   );
 };
