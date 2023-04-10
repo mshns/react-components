@@ -24,7 +24,7 @@ const Modal = ({ cardActive, setModalActive }: IModal) => {
       .then((response) => response.json())
       .then((data) => setCard(data))
       .then(() => setIsLoading(false));
-  }, [card, cardActive]);
+  }, [cardActive]);
 
   return (
     <div className={styles.modal}>
