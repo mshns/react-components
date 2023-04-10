@@ -1,0 +1,33 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 2rem;
+  margin-top: auto;
+  background-color: rgb(50, 50, 50);
+
+  &_author {
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    transition: ease-in-out 0.2s;
+    &:hover {
+      color: rgb(97, 218, 251);
+    }
+  }
+
+  &_copyright {
+    font-weight: 100;
+  }
+
+  &_school {
+    width: 80px;
+    height: 28px;
+    fill: rgb(255, 255, 255);
+    transition: ease-in-out 0.2s;
+    &:hover {
+      fill: rgb(97, 218, 251);
+    }
+  }
+}

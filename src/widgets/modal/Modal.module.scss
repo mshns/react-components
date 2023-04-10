@@ -1,0 +1,167 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+
+  &_content {
+    position: relative;
+    display: flex;
+    width: 50vmax;
+    border-radius: 0.5rem;
+    background-color: rgb(255, 255, 255);
+    z-index: 200;
+  }
+
+  &_cross {
+    position: absolute;
+    right: -2rem;
+    top: -2rem;
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+    transition: ease-in-out .2s;
+    &::before,
+    &::after {
+      position: absolute;
+      content: '';
+      right: 0;
+      top: 1rem;
+      width: 2rem;
+      height: 0.2rem;
+      border-radius: 0.5rem;
+      background-color: rgb(97, 218, 251);
+      transform: rotate(45deg);
+    }
+    &::after {
+      transform: rotate(-45deg);
+    }
+  }
+
+  &_image {
+    width: 30vmax;
+    height: 40vmax;
+    object-fit: cover;
+  }
+
+  &_information {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 20vmax;
+    padding: 1rem;
+    color: black;
+  }
+
+  &_author {
+    position: relative;
+    padding-left: 2rem;
+    font: {
+      size: 1.2rem;
+      weight: 100;
+    }
+    &::before {
+      position: absolute;
+      left: -0.5rem;
+      top: -0.5rem;
+      content: 'account_box';
+      font: {
+        family: 'Material Symbols Outlined';
+        size: 2rem;
+        weight: 400;
+      }
+      color: rgb(97, 218, 251);
+    }
+  }
+
+  &_title {
+    color: rgb(97, 218, 251);
+    font-weight: 100;
+    text-align: center;
+    padding: 0 0.5rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    border: {
+      left: 0.2rem solid rgb(97, 218, 251, 0.5);
+      right: 0.6rem double rgb(97, 218, 251, 0.5);
+    }
+  }
+
+  &_paragraph {
+    padding: 0.5rem;
+    border-left: 0.2rem solid rgb(0, 0, 0, 0.5);
+    &::first-letter {
+      text-transform: uppercase;
+    }
+  }
+
+  &_block {
+    width: 100%;
+    padding: 1rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    background-color: rgb(97, 218, 251, 0.1);
+  }
+
+  &_date,
+  &_likes {
+    position: relative;
+    padding-left: 2rem;
+    &::before {
+      position: absolute;
+      left: -0.25rem;
+      top: -0.6rem;
+      content: 'calendar_month';
+      font: {
+        family: 'Material Symbols Outlined';
+        size: 2rem;
+        weight: 400;
+      }
+      color: rgb(97, 218, 251);
+    }
+  }
+
+  &_likes {
+    &::before {
+      content: 'favorite';
+    }
+  }
+
+  &_button {
+    position: relative;
+    margin: 1rem auto;
+    padding: 0.5rem 2rem;
+    text: {
+      transform: uppercase;
+      decoration: none;
+    }
+    color: rgb(0, 0, 0);
+    background-color: rgb(97, 218, 251);
+    cursor: pointer;
+    border: none {
+      radius: 0.5rem;
+    }
+    outline: none;
+    transition: ease-in-out 0.2s;
+    &:hover,
+    &:focus {
+      color: rgb(97, 218, 251);
+      background-color: rgb(0, 0, 0);
+    }
+  }
+
+  &_shadow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 0, 0.75);
+    z-index: 100;
+  }
+}
