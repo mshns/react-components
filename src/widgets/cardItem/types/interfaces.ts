@@ -39,9 +39,7 @@ export interface ICardItem {
   links: ILinks;
 }
 
-export interface ICardList {
-  itemList: ICardItem[];
-}
+export type ICardList = ICardItem[];
 
 export interface ICardItemProps {
   card: ICardItem;

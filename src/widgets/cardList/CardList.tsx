@@ -5,9 +5,11 @@ import './CardList.scss';
 import CardItem from '../cardItem/CardItem';
 import Modal from '../modal/Modal';
 
-import { ICardItem, ICardList } from '../cardItem/types/interfaces';
+import { ICardItem } from '../cardItem/types/interfaces';
+import { useAppSelector } from '../../hooks/redux';
 
-const CardList = ({ itemList }: ICardList) => {
+const CardList = () => {
+  const { itemList } = useAppSelector((state) => state.homeReducer);
   const [modalActive, setModalActive] = useState(false);
   const [cardActive, setCardActive] = useState('');
 

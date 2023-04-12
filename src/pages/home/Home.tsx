@@ -1,21 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import SearchBar from '../../widgets/searchBar/SearchBar';
 import CardList from '../../widgets/cardList/CardList';
 import Spinner from '../../widgets/spinner/Spinner';
 
 import { Api } from './constants/unsplash';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { setItemList } from '../../store/reducers/homeSlice';
 
 const Home = () => {
-  const [itemList, setItemList] = useState([]);
-  const searchValueStorage = localStorage.getItem('searchInputValue');
-  const [query, setQuery] = useState(searchValueStorage ?? '');
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
+  const { query, isLoading, isError } = useAppSelector((state) => state.homeReducer);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    setIsLoading(true);
-    setIsError(false);
+    // setIsLoading(true);
+    // setIsError(false);
     const resource =
       query === ''
         ? `${Api.URL}${Api.Random}${Api.ClientID}`
@@ -23,16 +22,16 @@ const Home = () => {
     fetch(resource)
       .then((response) => response.json())
       .then((data) => {
-        query === '' ? setItemList(data) : setItemList(data.results);
-      })
-      .then(() => setIsLoading(false))
-      .catch(() => setIsError(true));
-  }, [query]);
+        query === '' ? dispatch(setItemList(data)) : dispatch(setItemList(data.results));
+      });
+    // .then(() => setIsLoading(false))
+    // .catch(() => setIsError(true));
+  }, [dispatch, query]);
 
   return (
     <main className="main">
-      <SearchBar setQuery={setQuery} />
-      {isLoading ? <Spinner /> : <CardList itemList={itemList} />}
+      <SearchBar />
+      {isLoading ? <Spinner /> : <CardList />}
       {isError && <p>Request limit exceeded, please try again in one hour.</p>}
     </main>
   );
