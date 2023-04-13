@@ -9,7 +9,7 @@ import { ICardItem } from '../cardItem/types/interfaces';
 import { useAppSelector } from '../../hooks/redux';
 
 const CardList = () => {
-  const { itemList } = useAppSelector((state) => state.homeReducer);
+  const { itemList } = useAppSelector((state) => state.searchReducer);
   const [modalActive, setModalActive] = useState(false);
   const [cardActive, setCardActive] = useState('');
 

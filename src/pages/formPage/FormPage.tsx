@@ -1,19 +1,19 @@
-import { useState } from 'react';
+import styles from './FormPage.module.scss';
 
 import Form from '../../widgets/form/Form';
 import Card from '../../widgets/card/Card';
 
-import styles from './FormPage.module.scss';
+import { useAppSelector } from '../../hooks/redux';
 
 import { IProduct } from '../../app/types/interfaces';
 
 const FormPage = () => {
-  const [productList, setProductList] = useState<IProduct[]>([]);
+  const { productList } = useAppSelector((state) => state.formReducer);
 
   return (
     <main className={styles.main}>
       <section className={styles.section}>
-        <Form setProductList={setProductList} />
+        <Form />
       </section>
       <section className={styles.section}>
         {productList.map((item: IProduct) => (

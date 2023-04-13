@@ -6,10 +6,10 @@ import Spinner from '../../widgets/spinner/Spinner';
 
 import { Api } from './constants/unsplash';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { setItemList } from '../../store/reducers/homeSlice';
+import { setItemList } from '../../store/reducers/searchSlice';
 
 const Home = () => {
-  const { query, isLoading, isError } = useAppSelector((state) => state.homeReducer);
+  const { query, isLoading, isError } = useAppSelector((state) => state.searchReducer);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

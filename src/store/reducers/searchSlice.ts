@@ -1,31 +1,27 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { IHomeState } from '../types/interfaces';
+import { ISearchState } from '../types/interfaces';
 import { ICardList } from '../../widgets/cardItem/types/interfaces';
 
-const initialState: IHomeState = {
+const initialState: ISearchState = {
   query: '',
   itemList: [],
   isLoading: false,
   isError: false,
 };
 
-const homeSlice = createSlice({
-  name: 'home',
+const searchSlice = createSlice({
+  name: 'search',
   initialState,
   reducers: {
     setQuery(state, action: PayloadAction<string>) {
-      console.log(state);
-      console.log(action);
       state.query = action.payload;
     },
     setItemList(state, action: PayloadAction<ICardList>) {
-      console.log(state);
-      console.log(action);
       state.itemList = action.payload;
     },
   },
 });
 
-export const { setQuery, setItemList } = homeSlice.actions;
-export default homeSlice.reducer;
+export const { setQuery, setItemList } = searchSlice.actions;
+export default searchSlice.reducer;
