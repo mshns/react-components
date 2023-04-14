@@ -19,13 +19,12 @@ const Form = () => {
     reset,
   } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
 
-  const [cardId, setCardId] = useState(1);
   const [submitAlert, setSubmitAlert] = useState(false);
 
   const onSubmit = handleSubmit((data) => {
     dispatch(
       setProductList({
-        id: cardId,
+        id: Date.now(),
         title: data.title,
         date: data.date,
         discount: data.discount === 'withDiscount',
@@ -36,7 +35,6 @@ const Form = () => {
 
     reset();
     setSubmitAlert(true);
-    setCardId((prev) => prev + 1);
   });
 
   const handleChange = () => {
