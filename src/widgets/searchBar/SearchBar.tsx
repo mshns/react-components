@@ -28,6 +28,7 @@ const SearchBar = () => {
         className={styles.search_input}
         placeholder="Enter a search term..."
       />
+
       <button type="submit" className={styles.search_button}>
         Search
       </button>
