@@ -41,6 +41,10 @@ export interface ICardItem {
 
 export type ICardList = ICardItem[];
 
+export interface ISearchResponse {
+  results: ICardList;
+}
+
 export interface ICardItemProps {
   card: ICardItem;
   setModalActive: React.Dispatch<React.SetStateAction<boolean>>;
