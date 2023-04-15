@@ -1,19 +1,30 @@
-import { describe, it } from 'vitest';
+import { Mock, describe, it, vi } from 'vitest';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 
-import FormPage from '../FormPage';
+import Form from '../../../widgets/form/Form';
 
 import { ValidationAlert } from '../../../widgets/form/constants/messages';
 
+import { useAppDispatch } from '../../../hooks/redux';
+
 describe('FormPage', () => {
+  vi.mock('../../../hooks/redux');
+  beforeEach(() => {
+    (useAppDispatch as Mock).mockReturnValue(vi.fn());
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
   it('renders form submit button', () => {
-    render(<FormPage />);
+    render(<Form />);
     const submitButton = screen.getByRole('button');
     expect(submitButton).toBeInTheDocument;
   });
 
   it('renders alert message before validation', async () => {
-    render(<FormPage />);
+    render(<Form />);
     await act(async () => {
       const submitButton = screen.getByRole('button');
       fireEvent.click(submitButton);
@@ -23,7 +34,7 @@ describe('FormPage', () => {
   });
 
   it('validates product name value', () => {
-    render(<FormPage />);
+    render(<Form />);
     act(() => {
       const inputName = screen.getByPlaceholderText('Enter product name');
       fireEvent.change(inputName, { target: { value: 'Xiaomi' } });
@@ -35,7 +46,7 @@ describe('FormPage', () => {
   });
 
   it('validates release date', () => {
-    render(<FormPage />);
+    render(<Form />);
     act(() => {
       const inputs = document.querySelectorAll('input');
       fireEvent.change(inputs[1], { target: { value: '2022-02-02' } });
@@ -47,7 +58,7 @@ describe('FormPage', () => {
   });
 
   it('validates product brand', () => {
-    render(<FormPage />);
+    render(<Form />);
     act(() => {
       const select = screen.getByRole('combobox');
       fireEvent.change(select, { target: { value: 'Xiaomi' } });
@@ -59,7 +70,7 @@ describe('FormPage', () => {
   });
 
   it('validates discounted', () => {
-    render(<FormPage />);
+    render(<Form />);
     act(() => {
       const radio = screen.getAllByRole('radio');
       fireEvent.click(radio[0]);
@@ -71,7 +82,7 @@ describe('FormPage', () => {
   });
 
   it('validates product thumbnail', () => {
-    render(<FormPage />);
+    render(<Form />);
     act(() => {
       const inputs = document.querySelectorAll('input');
       const thumbnail = new File(['hello'], 'hello.png', { type: 'image/png' });
@@ -84,7 +95,7 @@ describe('FormPage', () => {
   });
 
   it('validates agreement', () => {
-    render(<FormPage />);
+    render(<Form />);
     act(() => {
       const checkbox = screen.getByRole('checkbox');
       fireEvent.click(checkbox);
