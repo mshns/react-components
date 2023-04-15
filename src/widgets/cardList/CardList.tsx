@@ -2,21 +2,30 @@ import { useState } from 'react';
 
 import './CardList.scss';
 
+import Spinner from '../spinner/Spinner';
 import CardItem from '../cardItem/CardItem';
 import Modal from '../modal/Modal';
 
-import { ICardItem, ICardList } from '../cardItem/types/interfaces';
+import { useAppSelector } from '../../hooks/redux';
+import { useGetSearchPhotosQuery } from '../../store/reducers/apiSlice';
 
-const CardList = ({ itemList }: ICardList) => {
+import { ICardItem } from '../cardItem/types/interfaces';
+
+const CardList = () => {
+  const query = useAppSelector((state) => state.searchReducer.query);
+  const { data = [], isFetching } = useGetSearchPhotosQuery(query);
+
   const [modalActive, setModalActive] = useState(false);
   const [cardActive, setCardActive] = useState('');
 
   return (
     <div className="card-list">
-      {!itemList.length ? (
+      {isFetching ? (
+        <Spinner />
+      ) : !data.length ? (
         <p>Nothing found for your request. Please try again...</p>
       ) : (
-        itemList.map((item: ICardItem) => (
+        data.map((item: ICardItem) => (
           <CardItem
             card={item}
             setModalActive={setModalActive}

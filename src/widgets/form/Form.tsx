@@ -3,13 +3,15 @@ import { useForm } from 'react-hook-form';
 
 import styles from './Form.module.scss';
 
-import { IFormProps } from './types/interfaces';
-
 import brands from './constants/brands';
 import { ValidationAlert, SubmitAlert } from './constants/messages';
 import todayDate from './helpers/today';
+import { useAppDispatch } from '../../hooks/redux';
+import { setProductList } from '../../store/reducers/formSlice';
 
-const Form = ({ setProductList }: IFormProps) => {
+const Form = () => {
+  const dispatch = useAppDispatch();
+
   const {
     register,
     formState: { errors },
@@ -17,24 +19,22 @@ const Form = ({ setProductList }: IFormProps) => {
     reset,
   } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
 
-  const [cardId, setCardId] = useState(1);
   const [submitAlert, setSubmitAlert] = useState(false);
 
   const onSubmit = handleSubmit((data) => {
-    setProductList((prev) => [
-      ...prev,
-      {
-        id: cardId,
+    dispatch(
+      setProductList({
+        id: Date.now(),
         title: data.title,
         date: data.date,
         discount: data.discount === 'withDiscount',
         brand: data.brand,
         thumbnail: URL.createObjectURL(data.thumbnail[0]),
-      },
-    ]);
+      })
+    );
+
     reset();
     setSubmitAlert(true);
-    setCardId((prev) => prev + 1);
   });
 
   const handleChange = () => {

@@ -1,32 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import styles from './SearchBar.module.scss';
 
-import { ISearchBar } from './types/interfaces';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { setQuery } from '../../store/reducers/searchSlice';
 
-const SearchBar = ({ setQuery }: ISearchBar) => {
-  const searchValueStorage = localStorage.getItem('searchInputValue');
-  const [searchValue, setSearchValue] = useState(searchValueStorage ?? '');
-
-  useEffect(() => {
-    localStorage.setItem('searchInputValue', searchValue);
-  }, [searchValue]);
+const SearchBar = () => {
+  const query = useAppSelector((state) => state.searchReducer.query);
+  const dispatch = useAppDispatch();
+  const [search, setSearch] = useState(query);
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    setSearchValue(event.currentTarget.value);
+    setSearch(event.currentTarget.value);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setQuery(searchValue);
-    localStorage.setItem('searchInputValue', searchValue);
+    dispatch(setQuery(search));
   };
 
   return (
     <form className={styles.search} onSubmit={handleSubmit}>
       <input
         type="search"
-        value={searchValue}
+        value={search}
         onChange={handleChange}
         className={styles.search_input}
         placeholder="Enter a search term..."

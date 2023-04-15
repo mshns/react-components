@@ -39,8 +39,10 @@ export interface ICardItem {
   links: ILinks;
 }
 
-export interface ICardList {
-  itemList: ICardItem[];
+export type ICardList = ICardItem[];
+
+export interface ISearchResponse {
+  results: ICardList;
 }
 
 export interface ICardItemProps {
