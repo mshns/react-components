@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { store } from './store/store';
 
 hydrateRoot(
-  document.getElementById('root')!,
+  document.getElementById('app')!,
   <Provider store={store}>
     <BrowserRouter>
       <App />

@@ -1,14 +1,19 @@
 import { RenderToPipeableStreamOptions, renderToPipeableStream } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom/server';
 
+import { Provider } from 'react-redux';
+import { store } from './store/store';
+
 import App from './app/App';
 
-export default function render(url: string, opts: RenderToPipeableStreamOptions) {
+export function render(url: string, options: RenderToPipeableStreamOptions) {
   const stream = renderToPipeableStream(
-    <StaticRouter location={url}>
-      <App />
-    </StaticRouter>,
-    opts
+    <Provider store={store}>
+      <StaticRouter location={url}>
+        <App />
+      </StaticRouter>
+    </Provider>,
+    options
   );
   return stream;
 }
