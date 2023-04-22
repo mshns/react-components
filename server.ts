@@ -1,41 +1,40 @@
 import express from 'express';
 import { createServer } from 'vite';
 
-import fsp from 'fs/promises';
+import fs from 'fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const indexHTML = path.resolve(__dirname, 'index.html');
 
-const root = process.cwd();
 const PORT = process.env.PORT || 3001;
 
 async function startServer() {
   const app = express();
-  const vite = await createServer({ root, server: { middlewareMode: true }, appType: 'custom' });
+  const vite = await createServer({ server: { middlewareMode: true }, appType: 'custom' });
 
   app.use(vite.middlewares);
 
-  app.use('*', async (req, res) => {
-    const url = req.originalUrl;
+  app.use('*', async (request, response) => {
+    const url = request.originalUrl;
 
     try {
-      const template = await fsp.readFile(indexHTML, 'utf8');
+      const template = fs.readFileSync(indexHTML, 'utf8');
       const transformHTML = await vite.transformIndexHtml(url, template);
       const [startHTML, endHTML] = transformHTML.split('<!--app-->');
 
       const render = (await vite.ssrLoadModule('./src/entry-server.tsx')).render;
 
       try {
-        res.write(startHTML);
+        response.write(startHTML);
         const stream = render(url, {
           onShellReady() {
-            stream.pipe(res);
+            stream.pipe(response);
           },
           onAllReady() {
-            res.write(endHTML);
-            res.end();
+            response.write(endHTML);
+            response.end();
           },
         });
       } catch (error) {
