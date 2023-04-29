@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 describe('form page', () => {
   beforeEach(() => {
     cy.visit('/form');

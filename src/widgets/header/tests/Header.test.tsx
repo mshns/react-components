@@ -8,11 +8,7 @@ import Header from '../Header';
 describe('Header', () => {
   it('renders page title', () => {
     render(<Header />, { wrapper: BrowserRouter });
-    expect(
-      screen.getByRole('heading', {
-        level: 1,
-      })
-    ).toHaveTextContent('Home Page');
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Home Page');
   });
 
   it('gets pathname', () => {

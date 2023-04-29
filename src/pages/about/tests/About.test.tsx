@@ -6,10 +6,6 @@ import About from '../About';
 describe('About', () => {
   it('renders title', () => {
     render(<About />);
-    expect(
-      screen.getByRole('heading', {
-        level: 2,
-      })
-    ).toHaveTextContent('About');
+    expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('About');
   });
 });

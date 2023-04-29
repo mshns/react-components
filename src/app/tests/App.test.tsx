@@ -23,11 +23,7 @@ describe('App', () => {
     );
     const aboutLink = screen.getByText('About');
     fireEvent.click(aboutLink);
-    expect(
-      screen.getByRole('heading', {
-        level: 2,
-      })
-    ).toHaveTextContent('About Us');
+    expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('About Us');
   });
 
   it('renders pages', () => {

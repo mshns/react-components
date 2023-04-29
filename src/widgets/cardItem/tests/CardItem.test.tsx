@@ -40,10 +40,6 @@ describe('Card', () => {
         setCardActive={vi.fn()}
       />
     );
-    expect(
-      screen.getByRole('heading', {
-        level: 3,
-      })
-    ).toHaveTextContent('ololo');
+    expect(screen.getByRole('heading', { level: 3 })).toHaveTextContent('ololo');
   });
 });

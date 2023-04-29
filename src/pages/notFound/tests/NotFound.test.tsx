@@ -7,10 +7,6 @@ import NotFound from '../NotFound';
 describe('NotFound', () => {
   it('renders title', () => {
     render(<NotFound />, { wrapper: BrowserRouter });
-    expect(
-      screen.getByRole('heading', {
-        level: 1,
-      })
-    ).toHaveTextContent('Page Not Found');
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Page Not Found');
   });
 });

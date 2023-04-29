@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 describe('not found page', () => {
   beforeEach(() => {
     cy.visit('/not-found');

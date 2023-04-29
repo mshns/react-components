@@ -1,9 +1,11 @@
+/// <reference types="cypress" />
+
 describe('home page', () => {
   beforeEach(() => {
     cy.visit('/');
   });
 
-  it('renders 10 random cards', () => {
+  it('renders random cards', () => {
     cy.get('img').should('have.length', 10);
   });
 
