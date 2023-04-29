@@ -5,7 +5,12 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './app/App';
 
 import { Provider } from 'react-redux';
-import { store } from './store/store';
+import { RootState, setupStore } from './store/store';
+
+type CustomWindowInstanse = Window & typeof globalThis & { __PRELOADED_STATE__?: RootState };
+
+const store = setupStore((window as CustomWindowInstanse).__PRELOADED_STATE__);
+delete (window as CustomWindowInstanse).__PRELOADED_STATE__;
 
 hydrateRoot(
   document.getElementById('app') as HTMLElement,

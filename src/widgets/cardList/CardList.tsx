@@ -13,7 +13,7 @@ import { ICardItem } from '../cardItem/types/interfaces';
 
 const CardList = () => {
   const query = useAppSelector((state) => state.searchReducer.query);
-  const { data = [], isFetching } = useGetSearchPhotosQuery(query);
+  const { data = [], isFetching, isError } = useGetSearchPhotosQuery(query);
 
   const [modalActive, setModalActive] = useState(false);
   const [cardActive, setCardActive] = useState('');
@@ -22,6 +22,8 @@ const CardList = () => {
     <div className="card-list">
       {isFetching ? (
         <Spinner />
+      ) : isError ? (
+        <p>Too many requests. Please try again in one hour...</p>
       ) : !data.length ? (
         <p>Nothing found for your request. Please try again...</p>
       ) : (
