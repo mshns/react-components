@@ -1,0 +1,12 @@
+.main {
+  display: flex;
+  flex-direction: column;
+}
+
+.section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 100%;
+  padding: 2rem;
+}
